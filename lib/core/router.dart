@@ -18,7 +18,7 @@ final routerProvider = Provider<GoRouter>((ref) {
   
   return GoRouter(
     initialLocation: '/',
-    refreshListenable: GoRouterRefreshStream(authState.stream),
+    refreshListenable: GoRouterRefreshStream(Supabase.instance.client.auth.onAuthStateChange),
     redirect: (context, state) async {
       final session = Supabase.instance.client.auth.currentSession;
       final isLoggingIn = state.uri.toString() == '/login';
@@ -106,5 +106,6 @@ class GoRouterRefreshStream extends ChangeNotifier {
     super.dispose();
   }
 }
+
 
 
