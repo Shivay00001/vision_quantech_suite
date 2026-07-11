@@ -1,36 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'core/env.dart';
-import 'core/theme.dart';
-import 'core/router.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  
-  // Load Env
-  await dotenv.load(fileName: ".env");
+void main() { runApp(const MyApp()); }
 
-  // Initialize Supabase
-  await Supabase.initialize(
-    url: Env.supabaseUrl,
-    anonKey: Env.supabaseAnonKey,
-  );
-
-  runApp(const ProviderScope(child: MyApp()));
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'vision quantech suite',
+      theme: ThemeData(brightness: Brightness.dark, primaryColor: const Color(0xFF6366F1), scaffoldBackgroundColor: const Color(0xFF0F172A)),
+      home: const DashboardScreen(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
 }
 
-class MyApp extends ConsumerWidget {
-  const MyApp({super.key});
-
+class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({super.key});
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp.router(
-      title: 'VisionQuantech Business Suite',
-      theme: AppTheme.lightTheme,
-      routerConfig: ref.watch(routerProvider),
-      debugShowCheckedModeBanner: false,
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('vision quantech suite', style: const TextStyle(fontSize: 42, fontWeight: FontWeight.bold, color: Colors.white)),
+            const SizedBox(height: 16),
+            const Text('Next-generation enterprise software platform.', style: TextStyle(color: Colors.white70)),
+            const SizedBox(height: 48),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF6366F1), padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16)),
+              onPressed: () {},
+              child: const Text('Launch Application'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
